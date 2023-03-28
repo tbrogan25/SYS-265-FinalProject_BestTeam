@@ -38,5 +38,5 @@ Remove-NetRoute -InterfaceIndex $intID -confirm:$false -erroraction 'silentlycon
 Set-DNSClientServerAddress -InterfaceIndex $intID -ResetServerAddresses
 # Sets IP and netmask using user inputs
 New-NetIPAddress -InterfaceIndex $intID -IPAddress $hostIP -PrefixLength $prefixLength -DefaultGateway $defaultGateway
-Set-DNSClientServerAddress -InterfaceIndex $intID -ServerAddresses ("\$DNSAddress")
+Set-DNSClientServerAddress -InterfaceIndex $intID -ServerAddresses ("$DNSAddress")
 }
