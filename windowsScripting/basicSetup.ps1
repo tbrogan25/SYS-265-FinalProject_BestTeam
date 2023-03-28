@@ -50,7 +50,7 @@ Set-DNSClientServerAddress -InterfaceIndex $intID -ServerAddresses ("$DNSAddress
 
 
 # Conditional to see if you would like to change the hostname
-echo "Would you like to change the hostname? (y or n): "
+echo "Would you like to change the hostname? Only select yes if not yet domain joined. (y or n): "
 $changeName = Read-Host
 if($changeName = 'y') {
 # Collects required variables
