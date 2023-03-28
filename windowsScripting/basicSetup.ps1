@@ -12,12 +12,18 @@ echo "Please enter a username for a new local user: "
 $username = Read-Host
 echo "Please enter a password for the user '$username': "
 $password = Read-Host -AsSecureString
-New-LocalUser -Name $username -Password $password
-Add-LocalGroupMember -Group "Administrators" -Member $username
+echo " "
+echo "If the script freezes, please hit enter"
+New-LocalUser -Name $username -Password $password -confirm:$false
+Add-LocalGroupMember -Group "Administrators" -Member $username -confirm:$false 
 }
 
+# For some reason, the script freezes here sometimes
+# The read-host ensures that the user will still be able to answer the next question
+$test = Read-Host
 
 # check if the user wants to set up networking
+echo " "
 echo "Would you like to set up networking? (y or n): "
 $networking = Read-Host
 if ($networking -eq 'y') {
@@ -32,7 +38,9 @@ $defaultGateway = Read-Host
 echo "Please enter the DNS server address: "
 $DNSAddress = Read-Host
 $displayIntID = Get-NetAdapter | Select-Object InterfaceIndex
+echo " "
 Write-Host $displayIntID
+echo " "
 echo "Please enter the InterfaceIndex number displayed on the screen: "
 $intID = Read-Host
 
@@ -50,9 +58,10 @@ Set-DNSClientServerAddress -InterfaceIndex $intID -ServerAddresses ("$DNSAddress
 
 
 # Conditional to see if you would like to change the hostname
+echo " "
 echo "Would you like to change the hostname? Only select yes if not yet domain joined. (y or n): "
 $changeName = Read-Host
-if($changeName = 'y') {
+if($changeName -eq 'y') {
 # Collects required variables
 echo "Enter the new hostname: "
 $newHostname = Read-Host
@@ -61,3 +70,22 @@ $userAccount = Read-Host
 rename-computer -NewName $newHostname -force -LocalCredential $userAccount
 echo "Please restart your computer for this change to take effect."
 }
+
+
+# Conditional to join domain
+echo " "
+echo "Would you like to join a domain? (y or n): "
+$domainJoin = Read-Host
+if($domainJoin -eq 'y') {
+
+# Queries user for all variables
+echo "Enter the name of the domain you are joining: "
+$domainName = Read-Host
+echo "Enter a DOMAIN admin account name to use when joining the domain: "
+$adminName = Read-Host
+echo "You must restart the computer after this operation."
+# Actual command to join domain
+Add-Computer -DomainName $domainName -Credential $adminName -Force
+
+}
+
