@@ -2,8 +2,8 @@
 # It sets up networking, makes a local user, and changes the hostname
 
 
-# Conditional to see if you would like to make a new user
-echo "Would you like to make a local admin user account? (y or n): "
+# Conditional to see if you would like to make a new local user
+echo "Would you like to make a LOCAL admin user account? (y or n): "
 $newUser = Read-Host
 if($newUser -eq 'y') {
 
@@ -21,6 +21,31 @@ Add-LocalGroupMember -Group "Administrators" -Member $username -confirm:$false
 # For some reason, the script freezes here sometimes
 # The read-host ensures that the user will still be able to answer the next question
 $test = Read-Host
+
+# check to see if you would like to make a new DOMAIN user
+echo "Would you like to make a DOMAIN user account? (y or n): "
+$domainUser = Read-Host
+if($domainUser -eq 'y') {
+echo "Would you like this account to be an admin account? (y or n): "
+$domainAdmin = Read-Host
+	if($domainAdmin = 'y') {
+	echo "Please enter a username for the new domain admin account: "
+	$adminUsername = Read-Host
+	echo "Please enter a password for the user '$adminUsername': "
+	$adminPassword = Read-Host -AsSecureString
+	New-ADUser -Name $adminUsername -Password $adminPassword -confirm:$false
+	Add-ADGroupMember -Identity "Administrators" -Members $adminUsername -confirm:$false
+	}
+	else {
+	echo "Please enter a username for the new domain standard account: "
+	$standardUsername = Read-Host
+	echo "Please enter a password for the user '$standardUsername': "
+	$standardPassword = Read-Host -AsSecureString
+	New-ADUser -Name $standardUsername -Password $standardPassword -confirm:$false
+	Add-ADGroupMember -Identity "Users" -Members $adminUsername -confirm:$false
+	} 
+}
+
 
 # check if the user wants to set up networking
 echo " "
