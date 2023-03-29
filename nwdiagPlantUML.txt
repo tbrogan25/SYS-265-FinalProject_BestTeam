@@ -1,0 +1,41 @@
+@startuml
+
+title SYS-265-01 Final Project:\nBest Team's Network Diagram
+
+legend
+  Windows = Rectangle
+  Linux = Circle
+endlegend
+
+nwdiag {
+  network WAN {
+    address = 10.0.17.x/24
+    fw1 [address = "10.0.17.?"]
+  }
+  
+  network LAN {
+    address = "172.16.1.x/24";
+    fw1 [address = "172.16.1.2", description = "fw1\npfSense FW"]
+    docker [address = "172.16.1.5", shape = "storage", description = "docker\nUbuntu 20.04 Server\nDockerized Wiki"]
+    dhcp1 [address = "172.16.1.10", shape = "storage", description = "dhcp1\nCentOS 7\n Redundant DHCP"]
+    dhcp2 [address = "172.16.1.11", shape = "storage", description = "dhcp2\nCentOS 7\n Redundant DHCP"]
+    
+    group domain {
+      description = "Domain-joined (bestteam.local)"
+      color = "deepskyblue"
+      dc1 [address = "172.16.1.12", shape = "node", description = "dc1\nWindows Server 2019 Core\nRedundant ADDS + DNS"]
+      dc2 [address = "172.16.1.13", shape = "node", description = "dc2\nWindows Server 2019 Core\nRedundant ADDS + DNS"]
+      mgmt1 [address = "172.16.1.14", shape = "node", description = "mgmt1\nWindows Server 2019 (GUI)"]
+      util [address = "172.16.1.15", shape = "storage", description = "util\nCentOS 7\n[TBD Application]"]
+      mgmt2 [address = "172.16.1.16", shape = "storage", description = "mgmt2\nUbuntu 20.04 Server\nAnsible"]
+      dfs1 [address = "172.16.1.17", shape = "node", description = "dfs1\nWindows Server 2019 Core\nDFS for AD Profiles"]
+      dfs2 [address = "172.16.1.18", shape = "node", description = "dfs2\nWindows Server 2019 Core\nDFS for AD Profiles"]
+      w1 [address = "172.16.1.100", shape = "node", description = "w1\nWindows 10"]
+      w2 [address = "172.16.1.101", shape = "node", description = "w2\nWindows 10"]
+    }
+    
+  }
+
+}
+
+@enduml
