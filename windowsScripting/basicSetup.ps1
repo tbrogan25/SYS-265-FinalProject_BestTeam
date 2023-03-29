@@ -28,21 +28,20 @@ $domainUser = Read-Host
 if($domainUser -eq 'y') {
 echo "Would you like this account to be an admin account? (y or n): "
 $domainAdmin = Read-Host
-	if($domainAdmin = 'y') {
+	if($domainAdmin -eq 'y') {
 	echo "Please enter a username for the new domain admin account: "
 	$adminUsername = Read-Host
 	echo "Please enter a password for the user '$adminUsername': "
 	$adminPassword = Read-Host -AsSecureString
-	New-ADUser -Name $adminUsername -Password $adminPassword -confirm:$false
-	Add-ADGroupMember -Identity "Administrators" -Members $adminUsername -confirm:$false
+	New-ADUser -Name $adminUsername -AccountPassword $adminPassword -enabled:$true -confirm:$false
+	Add-ADGroupMember -Identity "Domain Admins" -Members $adminUsername -confirm:$false
 	}
 	else {
 	echo "Please enter a username for the new domain standard account: "
 	$standardUsername = Read-Host
 	echo "Please enter a password for the user '$standardUsername': "
 	$standardPassword = Read-Host -AsSecureString
-	New-ADUser -Name $standardUsername -Password $standardPassword -confirm:$false
-	Add-ADGroupMember -Identity "Users" -Members $adminUsername -confirm:$false
+	New-ADUser -Name $standardUsername -AccountPassword $standardPassword -enabled:$true -confirm:$false
 	} 
 }
 
