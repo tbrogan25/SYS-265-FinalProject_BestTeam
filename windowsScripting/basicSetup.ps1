@@ -26,8 +26,11 @@ $test = Read-Host
 echo "Would you like to make a DOMAIN user account? (y or n): "
 $domainUser = Read-Host
 if($domainUser -eq 'y') {
+# Allows user to choose if they want the new user to be added to the domain admin group or not
+# Then prompts for username and password for the account
 echo "Would you like this account to be an admin account? (y or n): "
 $domainAdmin = Read-Host
+	# creates admin domain user
 	if($domainAdmin -eq 'y') {
 	echo "Please enter a username for the new domain admin account: "
 	$adminUsername = Read-Host
@@ -36,6 +39,7 @@ $domainAdmin = Read-Host
 	New-ADUser -Name $adminUsername -AccountPassword $adminPassword -enabled:$true -confirm:$false
 	Add-ADGroupMember -Identity "Domain Admins" -Members $adminUsername -confirm:$false
 	}
+	#creates standard (non-admin) domain user
 	else {
 	echo "Please enter a username for the new domain standard account: "
 	$standardUsername = Read-Host
