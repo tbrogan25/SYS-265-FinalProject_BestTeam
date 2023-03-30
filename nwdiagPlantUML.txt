@@ -10,7 +10,7 @@ endlegend
 nwdiag {
   network WAN {
     address = 10.0.17.x/24
-    fw1 [address = "10.0.17.?"]
+    fw1 [address = "10.0.17.202"]
   }
   
   network LAN {
