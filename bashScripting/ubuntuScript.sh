@@ -17,9 +17,14 @@ read -p "Would you like to change the hostname? (y or n): " newHostname
 if [ $newHostname = 'y' ];
 then
 	read -p "Enter the new hostname: " hostname
-	hostname #hostname
+	hostname $hostname
 	cd /etc/cloud
 	sed -i "s|preserve_hostname: false|preserve_hostname: true|I" cloud.cfg
+	hostnamectl set-hostname $hostname
 	cd /etc
-	sed -i '2i\127.0.1.1 $hostname' hosts
+	sed -i '2d' hosts
+	sed -i "2i 127.0.1.1 ${hostname}" hosts
+	#sed -i "1d" hostname
+	#sed -i "1i ${hostname}" hostname
+	echo "Please restart your system to allow the change to take affect."
 fi
