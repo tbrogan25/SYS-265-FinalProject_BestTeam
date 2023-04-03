@@ -8,7 +8,8 @@ if [ $newUser = y ];
 then
 	read -p "Enter a username for a new local admin account: " username
 	read -p "Enter the password for the account ${username}: " password
-	useradd -m $username -p $password 
+	hashedPass=$(openssl passwd -1 $password)
+	useradd -m $username -p $hashedPass -s /bin/bash 
 	usermod -aG sudo $username
 fi
 
