@@ -6,8 +6,8 @@ dc2
 mgmt1
 
 
-[centos]
-dhcp1
+# [centos]
+# dhcp1
 [centos]
 dhcp2
 [centos]
