@@ -1,4 +1,4 @@
-[windows]
+[ad]
 dc1
 [windows]
 dc2
@@ -6,13 +6,16 @@ dc2
 mgmt1
 
 
-# [centos]
-# dhcp1
+[centos]
+dhcp1
 [centos]
 dhcp2
 [centos]
 util
 
+
+[ad:vars]
+ansible_shell_type=powershell
 
 [windows:vars]
 ansible_shell_type=powershell

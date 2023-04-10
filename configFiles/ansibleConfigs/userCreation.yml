@@ -1,0 +1,22 @@
+# This is the playbook for BestTeam's SYS-265 Final Project.
+# It fulfills requirements 13 and 14 of the RVTM
+#
+- name: Windows User Creation
+  hosts: ad
+  tasks:
+  - name: Create User testUser
+    community.windows.win_domain_user:
+      name: testUser
+      password: testing123!
+      path: ou="Ansible Users",dc=bestteam,dc=local
+      enabled: yes
+      state: present
+      domain_username: bestteam\ansibleDeployer
+      domain_password: secureDeployment!
+      domain_server: dc1.bestteam.local
+
+  - name: Checks account creation status
+    community.windows.win_domain_user:
+      name: testUser
+      path: ou="Ansible Users",dc=bestteam,dc=local
+      state: query
