@@ -1,0 +1,32 @@
+# This Ansible Playbook will create a user and deploy apt and yum packages to fulfill 
+# RVTM requirements 11,12, and 13 for BestTeam's SYS-265 final project
+#
+
+- name: Linux Requirements - User Creation
+  hosts: centos
+  tasks:
+    - name: Create Linux User linuxTest
+      become: true
+      ansible.builtin.user:
+        name: linuxTest
+        shell: /bin/bash
+        password: $6$lQVjo4BKR9PB$jl7hqM3XP/1HTSRc242Kb2i0wZzzdG6LdxpzNJVxgU63sJ/zkhYJvMTTr3joMU1qFWSAWNCDqtBxU7wJh2rYj/
+        state: present
+
+- name: Linux Requirements - Yum Package
+  hosts: centos
+  tasks:
+    - name: Install apache (yum)
+      become: true
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+
+- name: Linux Requirements - Apt Package
+  hosts: ubuntu
+  tasks:
+    - name: Install apache (apt)
+      become: true
+      ansible.builtin.apt:
+        name: apache2
+        state: present

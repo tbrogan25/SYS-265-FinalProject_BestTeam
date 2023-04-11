@@ -10,9 +10,11 @@ mgmt1
 dhcp1
 [centos]
 dhcp2
-[centos]
+[gitlab]
 util
 
+[ubuntu]
+docker
 
 [ad:vars]
 ansible_shell_type=powershell

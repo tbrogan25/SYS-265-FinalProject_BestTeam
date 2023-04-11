@@ -1,0 +1,5 @@
+- hosts: gitlab
+  vars_files:
+    - ~/SYS-265-FinalProject_BestTeam/configFiles/ansibleConfigs/geerlingguy.gitlab/vars/main.yml
+  roles:
+    - { role: geerlingguy.gitlab }
